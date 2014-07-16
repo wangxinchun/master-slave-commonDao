@@ -4,12 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by IntelliJ IDEA.
- * User: liuzz
- * Date: 2010-4-15
- * Time: 15:05:05
- *
- * callback interface
+ * 结果集数据回调
+ * @author wangxinchun1988@163.com
  */
 public interface IResultGetter {
 

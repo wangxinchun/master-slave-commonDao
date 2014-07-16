@@ -12,7 +12,7 @@ import org.logicalcobwebs.proxool.ProxoolFacade;
 
 import com.job.db.dataservice.datasource.DataSourceConfig;
 import com.job.db.dataservice.datasource.IDataSourceProvider;
-import com.job.db.utils.CloseUtil;
+import com.job.db.utils.DBUtil;
 
 /**
  * Proxool 连接池提供工厂类
@@ -63,7 +63,7 @@ public class ProxoolDatasourceProvider implements IDataSourceProvider {
         } catch (SQLException e) {
             log.error("error" + e.getMessage(), e);
         } finally {
-            CloseUtil.closeConnection(connection);
+            DBUtil.closeConnection(connection);
         }
 
     }

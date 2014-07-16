@@ -2,6 +2,10 @@ package com.job.db.utils;
 
 import com.job.db.dataservice.exception.BeanException;
 
+/**
+ * 根据Class 生成实例
+ * @author wangxinchun1988@163.com
+ */
 public abstract class BeanMaker {
 
 	public static <T> T makeBeanByClass(Class<T> clz) {

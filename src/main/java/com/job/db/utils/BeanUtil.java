@@ -14,12 +14,7 @@ import org.apache.log4j.Logger;
 import com.job.db.dataservice.exception.BeanException;
 
 /**
- * Created by IntelliJ IDEA.
- * User: liuzz
- * Date: 2010-4-14
- * Time: 14:24:21
- *
- * 封装javabean的Read and Write api
+ * @author wangxinchun1988@163.com
  */
 public class BeanUtil {
 

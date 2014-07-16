@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.job.db.dao.CommonDao;
 
+/**
+ * test case
+ * @author wangxinchun1988@163.com
+ * @date 2014-7-16下午5:38:54
+ */
 @Controller
 public class TestController {
 	@Autowired

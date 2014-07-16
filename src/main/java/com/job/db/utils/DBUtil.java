@@ -13,10 +13,10 @@ import org.slf4j.LoggerFactory;
  * @author wangxinchun1988@163.com
  * @date 2014-7-15下午3:57:22
  */
-public final class CloseUtil {
-	private static final Logger logger = LoggerFactory.getLogger(CloseUtil.class);
+public final class DBUtil {
+	private static final Logger logger = LoggerFactory.getLogger(DBUtil.class);
     
-	private CloseUtil() {
+	private DBUtil() {
 
     }
 

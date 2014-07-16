@@ -2,6 +2,9 @@ package com.job.db.utils;
 
 import java.lang.reflect.Method;
 
+/**
+ * @author wangxinchun1988@163.com
+ */
 public class BeanProperty {
 	
 	private Class<?> writeParamentType;

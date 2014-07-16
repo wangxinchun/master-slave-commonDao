@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.job.db.dataservice.exception.DaoException;
 import com.job.db.utils.BeanMaker;
 import com.job.db.utils.BeanUtil;
-import com.job.db.utils.CloseUtil;
+import com.job.db.utils.DBUtil;
 import com.mysql.jdbc.ResultSetImpl;
 import com.mysql.jdbc.exceptions.MySQLTimeoutException;
 
@@ -91,7 +91,7 @@ public class CommonDao {
             log.error("error" + e.getMessage() + ", tableId=" + tableId + ", " + msg, e);
             throw new DaoException("update error", e);
         } finally {
-            CloseUtil.closePs(preparedStatement);
+            DBUtil.closePs(preparedStatement);
         }
     }
     
@@ -112,7 +112,7 @@ public class CommonDao {
             log.error("error" + e.getMessage() + ", tableId=" + tableId + ", " + msg, e);
             throw new DaoException("insert for transfer error", e);
         } finally {
-            CloseUtil.closePs(preparedStatement);
+            DBUtil.closePs(preparedStatement);
         }
         return false;
     }
@@ -154,7 +154,7 @@ public class CommonDao {
             throw new DaoException("batch insert error ", e);
 
         } finally {
-            CloseUtil.closeSt(statement);
+            DBUtil.closeSt(statement);
         }
 
     }
@@ -184,7 +184,7 @@ public class CommonDao {
             throw new DaoException("batch insert error ", e);
 
         } finally {
-            CloseUtil.closeSt(statement);
+            DBUtil.closeSt(statement);
         }
 
     }
@@ -218,7 +218,7 @@ public class CommonDao {
             throw new DaoException("batch insert error ", e);
 
         } finally {
-            CloseUtil.closeSt(statement);
+            DBUtil.closeSt(statement);
         }
 
     }
@@ -259,7 +259,7 @@ public class CommonDao {
             throw new DaoException("batch insert error ", e);
 
         } finally {
-            CloseUtil.closeSt(statement);
+            DBUtil.closeSt(statement);
         }
 
     }
@@ -297,7 +297,7 @@ public class CommonDao {
             throw new DaoException("batch insert error ", e);
 
         } finally {
-            CloseUtil.closeSt(statement);
+            DBUtil.closeSt(statement);
         }
 
     }
@@ -327,7 +327,7 @@ public class CommonDao {
             throw new DaoException("batch insert error ", e);
 
         } finally {
-            CloseUtil.closeSt(statement);
+            DBUtil.closeSt(statement);
         }
     }
 	@Transactional( value = "txManager",rollbackFor = Exception.class)
@@ -356,7 +356,7 @@ public class CommonDao {
             throw new DaoException("batch insert error ", e);
 
         } finally {
-            CloseUtil.closeSt(statement);
+            DBUtil.closeSt(statement);
         }
     }
 	
@@ -382,7 +382,7 @@ public class CommonDao {
             throw new DaoException("batch insert error ", e);
 
         } finally {
-            CloseUtil.closeSt(statement);
+            DBUtil.closeSt(statement);
         }
     }
     private boolean executeSql(String sql, Object[] params,String tableId) {
@@ -410,7 +410,7 @@ public class CommonDao {
             log.error("db error " + ", tableId=" + tableId + ", " + msg , e);
             throw new DaoException("update error", e);
         } finally {
-            CloseUtil.closePs(preparedStatement);
+            DBUtil.closePs(preparedStatement);
         }
 
     }
@@ -435,7 +435,7 @@ public class CommonDao {
             log.error("db error " + ", tableId=" + tableId + ", " + msg , e);
             throw new DaoException("update error", e);
         } finally {
-            CloseUtil.closePs(preparedStatement);
+            DBUtil.closePs(preparedStatement);
         }
 
     }
@@ -629,7 +629,7 @@ public class CommonDao {
             log.error("error" + e.getMessage() + ", tableId=" + tableId + ", " + msg, e);
             throw new DaoException("query " + sql + "error", e);
         } finally {
-            CloseUtil.closePs(statement);
+            DBUtil.closePs(statement);
         }
 
         return list;
@@ -670,7 +670,7 @@ public class CommonDao {
             log.error("error" + e.getMessage() + ", tableId=" + tableId + ", " + msg, e);
             throw new DaoException("query " + sql + "error", e);
         } finally {
-            CloseUtil.closePs(statement);
+            DBUtil.closePs(statement);
         }
         return list;
     }
@@ -762,7 +762,7 @@ public class CommonDao {
 	          }
 	          log.error("error" + e.getMessage() + ", tableId=" + tableId + ", " + msg, e);
         } finally {
-            CloseUtil.closePs(statement);  
+            DBUtil.closePs(statement);  
     		try {
     			if(transactionType != -1){
     				connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
@@ -802,7 +802,7 @@ public class CommonDao {
         	
     		log.error("error" + e.getMessage() + ", tableId=" + tableId + ", " + msg, e);
     	} finally {
-    		CloseUtil.closePs(statement);
+    		DBUtil.closePs(statement);
     	}
     	return ret;
     }
@@ -845,7 +845,7 @@ public class CommonDao {
     		log.error("error" + e.getMessage() + ", tableId=" + tableId + ", " + msg, e);
     		return -1;
     	} finally {
-    		CloseUtil.closePs(statement);
+    		DBUtil.closePs(statement);
     	}
 
     }    
@@ -885,7 +885,7 @@ public class CommonDao {
             log.error("error" + e.getMessage() + ", tableId=" + tableId + ", " + msg, e);
             return -1;
         } finally {
-            CloseUtil.closePs(statement);
+            DBUtil.closePs(statement);
         }
     }    
     
@@ -909,7 +909,7 @@ public class CommonDao {
             log.error("error" + e.getMessage() + ", tableId=" + tableId + ", " + msg, e);
             throw new DaoException("query " + sql + "error", e);
         } finally {
-            CloseUtil.closeSt(statement);
+            DBUtil.closeSt(statement);
         }
 
         return o;
@@ -959,7 +959,7 @@ public class CommonDao {
             log.error("error" + e.getMessage() + ", tableId=" + clientId + ", " + msg, e);
             throw new DaoException("query " + sql + "error", e);
         } finally {
-            CloseUtil.closePs(statement);
+            DBUtil.closePs(statement);
         }
         return ret;
 	}

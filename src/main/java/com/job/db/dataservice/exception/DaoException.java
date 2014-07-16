@@ -1,10 +1,8 @@
 package com.job.db.dataservice.exception;
 
+
 /**
- * Created by IntelliJ IDEA.
- * User: liuzz
- * Date: 2010-4-15
- * Time: 15:17:44
+ * @author wangxinchun1988@163.com
  */
 public class DaoException extends RuntimeException {
 

@@ -1,10 +1,7 @@
 package com.job.db.dataservice.exception;
 
 /**
- * Created by IntelliJ IDEA.
- * User: liuzz
- * Date: 2010-4-14
- * Time: 14:29:07
+ * @author wangxinchun1988@163.com
  */
 public class BeanException extends RuntimeException {
     

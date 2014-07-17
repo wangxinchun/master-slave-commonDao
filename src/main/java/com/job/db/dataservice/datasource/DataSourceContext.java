@@ -28,7 +28,7 @@ public  class DataSourceContext {
     public  static final Map<String,String> masterDb2IpPortMapping = new HashMap<String,String>();
     
     /** 从库数据源  (ip+port->IDataSourceProvider)*/
-    public  static  final Map<String, List<IDataSourceProvider>> slaveMap = new HashMap<String, List<IDataSourceProvider>>();
+    public  static  final Map<String, IDataSourceProvider> slaveMap = new HashMap<String, IDataSourceProvider>();
     /** 从库数据库名称到ip+port的映射*/
     public  static final Map<String,List<String>> slaveDb2IpPortListMapping = new HashMap<String,List<String>>();
     
@@ -67,7 +67,7 @@ public  class DataSourceContext {
     }
     
     /** 初始化从库资源*/
-    private final void doSlaveInit(List<DataSourceConfig> configList, Map<String, List<IDataSourceProvider>> slaveMap) {
+    private final void doSlaveInit(List<DataSourceConfig> configList, Map<String, IDataSourceProvider> slaveMap) {
     	for(DataSourceConfig config : configList){
     		String key = config.getIp() + config.getPort();
     		if(StringUtils.isNotEmpty(config.getDbName())){
@@ -83,9 +83,8 @@ public  class DataSourceContext {
     		logger.info("DataSourceContext doSlaveInit {}",config);
     		dataSourceProvider.config(config);
     		if(slaveMap.get(key) == null){
-    			slaveMap.put(key, new ArrayList<IDataSourceProvider>());
+    			slaveMap.put(key, dataSourceProvider);
     		}
-    		slaveMap.get(key).add(dataSourceProvider);
     	}
     }
     
@@ -97,11 +96,9 @@ public  class DataSourceContext {
         for (IDataSourceProvider provider : masterMap.values()) {
             provider.shutdown();
         }
-        Collection<List<IDataSourceProvider>> listCollection = slaveMap.values();
-        for (List<IDataSourceProvider> providers : listCollection) {
-            for (IDataSourceProvider provider : providers) {
-                provider.shutdown();
-            }
+        Collection<IDataSourceProvider> listCollection = slaveMap.values();
+        for (IDataSourceProvider provider: listCollection) {
+                provider.shutdown(); 
         }
         logger.info("DataSourceContext shutDown end ");
     }
@@ -123,10 +120,8 @@ public  class DataSourceContext {
     	} else {
     		List<IDataSourceProvider> retList = new ArrayList<IDataSourceProvider>();
     		for(String item : ipPortKeyList){
-    			List<IDataSourceProvider> itemList = slaveMap.get(item);
-    			if(itemList != null){
-    				retList.addAll(itemList);
-    			}
+    			IDataSourceProvider provider = slaveMap.get(item);
+    			retList.add(provider);
     		}
     		return retList;
     	}

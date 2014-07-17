@@ -25,7 +25,7 @@ public class CommonDaoTest {
 	 */
 	@Test
 	public  void testDAOFindMap() {
-		List<Map<String, Object>> ret = commonDao.findListMap("select * from client_shard where id = 30", "tts");
+		List<Map<String, Object>> ret = commonDao.findListMap("select * from client_shard limit 1", "tts");
 		System.out.println(ret);
 	}
 	

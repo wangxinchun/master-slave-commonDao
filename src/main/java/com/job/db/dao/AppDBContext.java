@@ -33,7 +33,6 @@ public class AppDBContext {
 	
 	private static ThreadLocal<Integer> conType = new ThreadLocal<Integer>();
 	
-	private static final int SYS_CONNECTION = 1;
 	private static final int MASTER_CONNECTION = 2;
 	private static final int SLAVE_CONNECTION = 3;
 	
@@ -129,8 +128,6 @@ public class AppDBContext {
 	public static String getConTypePrefix() {
 		int type = getConType();
 		switch(type) {
-		case SYS_CONNECTION:
-			return "Sys";
 		case SLAVE_CONNECTION:
 			return "Slave";
 		case MASTER_CONNECTION:

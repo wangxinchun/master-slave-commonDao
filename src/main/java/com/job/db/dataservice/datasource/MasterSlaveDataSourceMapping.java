@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+/**
+ * 一主多从的配置包装类
+ * @author wangxinchun1988@163.com
+ */
 public class MasterSlaveDataSourceMapping {
 	
 	private List<MasterSlaveDataSourceMappingItem> list;
@@ -16,8 +20,12 @@ public class MasterSlaveDataSourceMapping {
 		this.list = list;
 	}
 
+	/** 主从库配置项
+	 */
 	public static class MasterSlaveDataSourceMappingItem{
+		/** 主库数据源*/
 		private DataSource master;
+		/** 从库数据源列表*/
 		private List<DataSource> slaveList;
 		public DataSource getMaster() {
 			return master;

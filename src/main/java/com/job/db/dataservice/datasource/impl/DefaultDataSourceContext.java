@@ -9,6 +9,10 @@ import org.apache.commons.lang.StringUtils;
 
 import com.job.db.dataservice.datasource.DataSourceContext;
 
+/**
+ *  简单实现（TODO BasicDataSource 很粗糙的哈）
+ * @author wangxinchun
+ */
 public class DefaultDataSourceContext extends DataSourceContext {
 
 	protected void doMasterInit(DataSource dataSource) {
@@ -21,7 +25,6 @@ public class DefaultDataSourceContext extends DataSourceContext {
 			return;
 		}
 		masterMap.put(key, new DefaultDatasourceProvider(dataSource));
-		
 	}
 
 	protected void doSlaveInit(DataSource dataSource) {
@@ -37,7 +40,6 @@ public class DefaultDataSourceContext extends DataSourceContext {
 			return;
 		}
 		slaveMap.put(key, new DefaultDatasourceProvider(dataSource));
-		
 	}
 
 	private URLInfo getDataSourceURLInfo(DataSource dataSource) {
@@ -57,8 +59,7 @@ public class DefaultDataSourceContext extends DataSourceContext {
 		}
 		return urlInfo;
 	}
-	 
-	 
+	
 	 private class URLInfo{
 		 private String ip;
 		 private String port;
@@ -82,7 +83,6 @@ public class DefaultDataSourceContext extends DataSourceContext {
 		public void setDb(String db) {
 			this.db = db;
 		}
-		 
 		public String getDataSourceKey(){
 			return ip+":"+port;
 		}

@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import com.job.db.dataservice.datasource.IDataSourceProvider;
 
 /**
- * Proxool 连接池提供工厂类
+ * Proxool 连接池包装类
  * @author wangxinchun1988@163.com
  * @date 2014-7-15下午2:14:08
  */

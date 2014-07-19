@@ -20,7 +20,6 @@ import com.job.db.dataservice.datasource.MasterSlaveDataSourceMapping.MasterSlav
  */
 public abstract class DataSourceContext {
 	private static final Logger logger = LoggerFactory.getLogger(DataSourceContext.class);
-
     /**
      * 主库数据源     (ip+port->IDataSourceProvider)*/
     protected  static final Map<String, IDataSourceProvider> masterMap = new HashMap<String, IDataSourceProvider>();
@@ -67,8 +66,6 @@ public abstract class DataSourceContext {
     
     protected abstract void doSlaveInit(DataSource dataSource);
     
-   
-    
     /**
      * 关闭资源
      */
@@ -84,7 +81,7 @@ public abstract class DataSourceContext {
         logger.info("DataSourceContext shutDown end ");
     }
 
-    
+    /** 根据dbname获取主库数据源*/
     public static IDataSourceProvider getMasterDataSourceProvider(String dbName){
     	String ipPortKey = masterDb2IpPortMapping.get(dbName);
     	if(ipPortKey == null){
@@ -94,6 +91,7 @@ public abstract class DataSourceContext {
     	}
     }
     
+    /** 根据数据库的名字获取多个从库数据源列表*/
     public static  List<IDataSourceProvider> getSlaveDataSourceProvider(String dbName){
     	List<String> ipPortKeyList = slaveDb2IpPortListMapping.get(dbName);
     	if(ipPortKeyList == null){

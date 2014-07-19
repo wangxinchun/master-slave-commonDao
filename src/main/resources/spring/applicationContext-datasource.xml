@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <bean id="parentDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" abstract="true">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000"/> <!-- 每隔毫秒秒检查一次连接池中空闲的连接 -->
+		<property name="minEvictableIdleTimeMillis" value="600000" /> <!-- 连接池中连接可空闲的时间,毫秒 -->
+		<property name="removeAbandoned" value="true" /> <!-- 是否清理removeAbandonedTimeout秒没有使用的活动连接,清理后并没有放回连接池 -->
+		<property name="removeAbandonedTimeout" value="60" />  <!-- 活动连接的最大空闲时间 -->
+		<property name="minIdle" value="10" /> <!-- 最小空闲连接数 -->
+		<property name="maxWait" value="60000" /> <!-- 最大等待时间，当没有可用连接时，连接池等待连接释放的最大时间 -->
+	</bean>
+
+ <!-- ******************* ******************* 公共库  （主从配置） ******************* ******************* -->
+    <bean id="commonMaster" parent="parentDataSource">
+		<property name="url" value="${jdbc.commonMaster.url}" />
+		<property name="username" value="${jdbc.commonMaster.username}" />
+		<property name="password" value="${jdbc.commonMaster.password}" />
+	</bean>
+	
+	 <bean id="commonSlaveA" parent="parentDataSource">
+		<property name="url" value="${jdbc.commonSlaveA.url}" />
+		<property name="username" value="${jdbc.commonSlaveA.username}" />
+		<property name="password" value="${jdbc.commonSlaveA.password}" />
+	</bean>
+	
+	<bean id="commonSlaveB" parent="parentDataSource">
+		<property name="url" value="${jdbc.commonSlaveB.url}" />
+		<property name="username" value="${jdbc.commonSlaveB.username}" />
+		<property name="password" value="${jdbc.commonSlaveB.password}" />
+	</bean>
+
+ <bean id="commonMasterSlaveMapping" class="com.job.db.dataservice.datasource.MasterSlaveDataSourceMapping.MasterSlaveDataSourceMappingItem">
+    <property name="master">
+       <ref bean="commonMaster"/>
+    </property>
+    <property name="slaveList">
+        <list>
+           <ref bean="commonSlaveA"/>
+           <ref bean="commonSlaveB"/>
+        </list>
+    </property>
+ </bean>
+ <!-- *************************************** 代理商库 A 组*************************************** -->
+     <bean id="customerMasterA" parent="parentDataSource">
+		<property name="url" value="${jdbc.customerMasterA.url}" />
+		<property name="username" value="${jdbc.customerMasterA.username}" />
+		<property name="password" value="${jdbc.customerMasterA.password}" />
+	</bean>
+	
+	 <bean id="customerSlaveAA" parent="parentDataSource">
+		<property name="url" value="${jdbc.customerSlaveAA.url}" />
+		<property name="username" value="${jdbc.customerSlaveAA.username}" />
+		<property name="password" value="${jdbc.customerSlaveAA.password}" />
+	</bean>
+	
+	<bean id="customerSlaveAB" parent="parentDataSource">
+		<property name="url" value="${jdbc.customerSlaveAB.url}" />
+		<property name="username" value="${jdbc.customerSlaveAB.username}" />
+		<property name="password" value="${jdbc.customerSlaveAB.password}" />
+	</bean>
+
+ <bean id="customerMasterSlaveMappingA" class="com.job.db.dataservice.datasource.MasterSlaveDataSourceMapping.MasterSlaveDataSourceMappingItem">
+    <property name="master">
+       <ref bean="customerMasterA"/>
+    </property>
+    <property name="slaveList">
+        <list>
+           <ref bean="customerSlaveAA"/>
+           <ref bean="customerSlaveAB"/>
+        </list>
+    </property>
+ </bean>
+    
+ <!-- ***************************************代理商库 B组  *************************************** -->
+      <bean id="customerMasterB" parent="parentDataSource">
+		<property name="url" value="${jdbc.customerMasterB.url}" />
+		<property name="username" value="${jdbc.customerMasterB.username}" />
+		<property name="password" value="${jdbc.customerMasterB.password}" />
+	</bean>
+	
+	 <bean id="customerSlaveBA" parent="parentDataSource">
+		<property name="url" value="${jdbc.customerSlaveBA.url}" />
+		<property name="username" value="${jdbc.customerSlaveBA.username}" />
+		<property name="password" value="${jdbc.customerSlaveBA.password}" />
+	</bean>
+	
+	<bean id="customerSlaveBB" parent="parentDataSource">
+		<property name="url" value="${jdbc.customerSlaveBB.url}" />
+		<property name="username" value="${jdbc.customerSlaveBB.username}" />
+		<property name="password" value="${jdbc.customerSlaveBB.password}" />
+	</bean>
+
+ <bean id="customerMasterSlaveMappingB" class="com.job.db.dataservice.datasource.MasterSlaveDataSourceMapping.MasterSlaveDataSourceMappingItem">
+    <property name="master">
+       <ref bean="customerMasterB"/>
+    </property>
+    <property name="slaveList">
+        <list>
+           <ref bean="customerSlaveBA"/>
+           <ref bean="customerSlaveBB"/>
+        </list>
+    </property>
+ </bean>
+    
+ <!-- **************************************主从关系总配置***************************************** -->
+   <bean id="masterSlaveDataSourceMapping" class=" com.job.db.dataservice.datasource.MasterSlaveDataSourceMapping">
+      <property name="list">
+         <list>
+             <ref bean="commonMasterSlaveMapping"/>
+             <ref bean="customerMasterSlaveMappingA"/>
+             <ref bean="customerMasterSlaveMappingB"/>
+         </list>
+      </property>
+   </bean>
+   
+
+	<bean id="dataSourceContext" class="com.job.db.dataservice.datasource.impl.DefaultDataSourceContext" init-method="init" destroy-method="shutDown">
+	   <property name="masterSlaveDataSourceMapping" ref="masterSlaveDataSourceMapping"/>
+	</bean>
+	
+	<!--  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean> -->
+    
+     <bean id="dataSource" class="com.job.db.dataservice.datasource.AppContextDatasource"/>
+    
+     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    
+    <bean id="commonDao" class="com.job.db.dao.CommonDao"/>
+    <aop:aspectj-autoproxy/>
+
+</beans>
